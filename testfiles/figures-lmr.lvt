@@ -1,0 +1,36 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{figureversions}
+
+\begin{document}
+
+\fontfamily{lmr}
+\selectfont
+
+\START
+
+\TEST{\txfigures} {
+  \txfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\lnfigures} {
+  \lnfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\tbfigures} {
+  \tbfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\prfigures} {
+  \prfigures
+  \TYPE{\f@family}
+}
+
+\END

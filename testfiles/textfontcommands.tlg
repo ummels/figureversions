@@ -1,0 +1,170 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: textfigures
+============================================================
+> \box...=
+\hbox(6.06499+1.12498)x19.78996
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 3
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================
+============================================================
+TEST 2: liningfigures
+============================================================
+LaTeX Font Info:    Trying to load font information for T1+cantarell-LF on input line ....
+(../T1cantarell-LF.fd
+File: T1cantarell-LF.fd ....-..-.. Font definitions for T1/cantarell-LF.
+)
+> \box...=
+\hbox(6.90498+1.12498)x19.74995
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-LF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 3
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================
+============================================================
+TEST 3: tabularfigures
+============================================================
+LaTeX Font Info:    Trying to load font information for T1+cantarell-TOsF on input line ....
+(../T1cantarell-TOsF.fd
+File: T1cantarell-TOsF.fd ....-..-.. Font definitions for T1/cantarell-TOsF.
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line ....
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line ....
+> \box...=
+\hbox(6.06499+1.12498)x20.15996
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-TOsF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 3
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================
+============================================================
+TEST 4: proportionalfigures
+============================================================
+> \box...=
+\hbox(6.06499+1.12498)x19.78996
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 3
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================
+============================================================
+TEST 5: tabularfigures+liningfigures
+============================================================
+LaTeX Font Info:    Trying to load font information for T1+cantarell-TLF on input line ....
+(../T1cantarell-TLF.fd
+File: T1cantarell-TLF.fd ....-..-.. Font definitions for T1/cantarell-TLF.
+)
+> \box...=
+\hbox(6.90498+1.12498)x36.13994
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-TOsF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-TLF/m/n/10 3
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-TOsF/m/n/10 4
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 5
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================
+============================================================
+TEST 6: liningfigures+tabularfigures
+============================================================
+> \box...=
+\hbox(6.90498+1.12498)x36.11995
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-LF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-TLF/m/n/10 3
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-LF/m/n/10 4
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 5
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================
+============================================================
+TEST 7: liningfigures+textfigures
+============================================================
+> \box...=
+\hbox(6.90498+1.12498)x35.89995
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-LF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 3
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-LF/m/n/10 4
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 5
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================
+============================================================
+TEST 8: tabularfigures+proportionalfigures
+============================================================
+> \box...=
+\hbox(6.06499+1.12498)x35.91994
+.\T1/cantarell-OsF/m/n/10 1
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-TOsF/m/n/10 2
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 3
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-TOsF/m/n/10 4
+.\kern 0.0
+.\glue 2.2 plus 1.09999 minus 0.733
+.\T1/cantarell-OsF/m/n/10 5
+! OK.
+<argument> \l_tmpa_box 
+l. ...}
+============================================================

@@ -1,0 +1,59 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+init
+cantarell-OsF
+============================================================
+switch to ppl
+LaTeX Font Info:    Trying to load font information for T1+ppl-OsF on input line ....
+No file T1ppl-OsF.fd.
+LaTeX Font Info:    Trying to load font information for T1+ppl-LF on input line ....
+No file T1ppl-LF.fd.
+LaTeX Font Info:    Trying to load font information for T1+ppl-TLF on input line ....
+No file T1ppl-TLF.fd.
+LaTeX Font Info:    Trying to load font information for T1+ppl-TOsF on input line ....
+No file T1ppl-TOsF.fd.
+LaTeX Font Info:    Trying to load font information for T1+pplj on input line ....
+pplj
+============================================================
+lnfigures
+LaTeX Font Info:    Trying to load font information for T1+pplx on input line ....
+pplx
+============================================================
+switch to cantarell
+LaTeX Font Info:    Trying to load font information for T1+cantarell-LF on input line ....
+(../T1cantarell-LF.fd
+File: T1cantarell-LF.fd ....-..-.. Font definitions for T1/cantarell-LF.
+)
+cantarell-LF
+============================================================
+tbfigures
+LaTeX Font Info:    Trying to load font information for T1+cantarell-TLF on input line ....
+(../T1cantarell-TLF.fd
+File: T1cantarell-TLF.fd ....-..-.. Font definitions for T1/cantarell-TLF.
+)
+cantarell-TLF
+============================================================
+switch to ppl
+pplx
+============================================================
+prfigures
+pplx
+============================================================
+txfigures
+pplj
+============================================================
+switch to cantarell
+cantarell-OsF
+============================================================
+switch to foo
+LaTeX Font Info:    Trying to load font information for T1+foo-OsF on input line ....
+No file T1foo-OsF.fd.
+LaTeX Font Info:    Trying to load font information for T1+foo-LF on input line ....
+No file T1foo-LF.fd.
+LaTeX Font Info:    Trying to load font information for T1+foo-TLF on input line ....
+No file T1foo-TLF.fd.
+LaTeX Font Info:    Trying to load font information for T1+foo-TOsF on input line ....
+No file T1foo-TOsF.fd.
+LaTeX Font Info:    Trying to load font information for T1+fooj on input line ....
+No file T1fooj.fd.
+foo

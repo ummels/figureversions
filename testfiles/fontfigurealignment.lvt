@@ -1,0 +1,48 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{figureversions}
+
+\begin{document}
+
+\fontfamily{cantarell-OsF}
+\selectfont
+
+\START
+
+\TEST{proportional (text)}{
+  \fontfigurealignment{proportional}
+  \TYPE{\f@family}
+}
+
+\TEST{tabular (text)}{
+  \fontfigurealignment{tabular}
+  \TYPE{\f@family}
+}
+
+\TEST{foo (text)}{
+  \fontfigurealignment{foo}
+  \TYPE{\f@family}
+}
+
+\fontfamily{cantarell-LF}
+
+\TEST{proportional (lining)}{
+  \fontfigurealignment{proportional}
+  \TYPE{\f@family}
+}
+
+\TEST{tabular (lining)}{
+  \fontfigurealignment{tabular}
+  \TYPE{\f@family}
+}
+
+\TEST{foo (lining)}{
+  \fontfigurealignment{foo}
+  \TYPE{\f@family}
+}
+
+\END

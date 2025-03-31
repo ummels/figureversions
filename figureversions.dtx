@@ -1,0 +1,1107 @@
+% \iffalse meta-comment
+%
+% Copyright (c) 2025 by Michael Ummels <michael@ummels.de>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   https://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Michael Ummels.
+%
+% This work consists of the files figureversions.dtx, figureversions.ins and
+% the derived files figureversions.sty and figureversions.pdf.
+%
+%<*driver>
+\documentclass[a4paper,onlydoc]{l3doc}
+
+\usepackage[nottoc]{tocbibind}
+\usepackage{figureversions}
+\usepackage[toc,enum,bib]{tabfigures}
+\usepackage[scale=0.95]{cantarell}
+\usepackage[narrow]{inconsolata}
+\usepackage{microtype}
+
+\hypersetup{
+  bookmarksnumbered,
+  colorlinks=false,
+  pdfborder={0 0 0}
+}
+
+% Hack in order to get quotes in verbatim mode right
+\DeclareEncodingSubset{TS1}{zi4}{1}
+
+\renewcommand{\sfdefault}{cantarell-OsF}
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\MacroLongFont}{\fontfamily{zi4}\scriptsize}
+\renewcommand{\baselinestretch}{1.1}
+\makeatletter
+\renewcommand{\meta@font@select}{\sffamily\itshape}
+\makeatother
+
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+
+\begin{document}
+  \DocInput{figureversions.dtx}
+\end{document}
+%</driver>
+%<*package>
+\ProvidesExplPackage {figureversions} {2025-04-01} {1.0} {Figure versions}
+%</package>
+% \fi
+%
+% \changes{v1.0}{2025-04-01}{Inital version}
+%
+% \GetFileInfo{figureversions.sty}
+%
+% \title{How Do You Like Your Figures?}
+% \author{Michael Ummels}
+% \date{\fileversion\quad\filedate}
+% \maketitle
+%
+% \begin{abstract}
+% The \pkg{figureversions} package defines several commands to switch between
+% figure versions, which determine the appearance of numbers in your
+% document. The package works with many font packages available on CTAN
+% as well as with most OpenType fonts under \XeTeX\ and \LuaTeX\ in combination
+% with \pkg{fontspec}.
+% \end{abstract}
+%
+% \begin{documentation}
+%
+% \tableofcontents
+%
+% \section{Introduction}
+%
+% While basic fonts only have \emph{lining} figures (aka numbers), which extend
+% from the base line to the height of capital letters, advanced fonts may come
+% with several other \emph{figure versions}, the most prominent being
+% \emph{old-style} or \emph{text} figures which look more like lowercase letters
+% and therefore fit nicely into a block of lower/mixed-case text: compare
+% \liningfigures{1234567890} to \textfigures{1234567890}.%
+% \marginpar{%
+%   \raggedleft\LARGE
+%   \begin{tabular}{r}
+%     \liningfigures{1234567890} \\
+%     \textfigures{1234567890}
+%   \end{tabular}
+% }
+%
+% Since \LaTeX's font selection system \cite{nfss} has no support
+% for figure versions, font package authors have resorted to define one
+% \LaTeX\ font family for each figure version, so you can switch between
+% different figure versions by invoking the low-level \cs{fontfamily} command,
+% followed by a call to \cs{selectfont}. This is not only cumbersome, but also
+% ties the font family to the figure version, so you cannot change them
+% independently.
+%
+% The \pkg{figureversions} package not only makes it easier to switch figure
+% versions, but it also lets you change the two dimensions of a figure version
+% separately: \emph{figure style} and \emph{figure alignment}. While figure
+% style is solely about the the apperance of figures, figure alignment
+% is concerned with the width of figures. In particular, \emph{tabular}
+% figures all have the same width, so multiple-digit numbers nicely line up
+% when stacked on top of each other.%
+% \marginpar{%
+%   \raggedleft\LARGE
+%   \begin{tabular}{rr}
+%     12345 & \tbfigures{12345} \\
+%     67890 & \tbfigures{67890}
+%   \end{tabular}
+% }
+%
+% \subsection{History}
+%
+% Most commands defined by this package first appeared in the
+% \pkg{MinionPro} package\footnote{\url{https://ctan.org/pkg/minionpro}} by
+% Achim Blumensath et al., a package that made the professional
+% Minion\texttrademark\ Pro font family by Adobe accessible to all
+% \LaTeX\ users (i.e.\ not only when using \XeTeX\ or \LuaTeX).
+% Since the concept of figure versions is not specific to Minion Pro, the
+% corresponding functionality was then incorporated by Andreas Bühmann into a
+% seperate package called \pkg{fontaxes}.\kern-0.15em%
+% \footnote{\url{https://ctan.org/pkg/fontaxes}} The \pkg{fontaxes}
+% package does not only support different figure versions, but has also split
+% the \emph{shape} of a font into two dimensions (`axes'), which can be
+% changed independently of each other. For instance, \cs{itshape} operates on
+% the first dimension, while \cs{scshape} operates on the second. With
+% \LaTeX\ release 2020-02-02, that functionality was integrated into the
+% kernel \cite{ltnews31}, so -- with the exception of the functionality
+% dealing with figure versions -- the \pkg{fontaxes} package has been made
+% redundant. Hence, its current maintainer decided to undertake a modern
+% rewrite and strip off all functionality that has been integrated into the
+% kernel, thereby adding support for
+% \pkg{fontspec}\footnote{\url{https://ctan.org/pkg/fontspec}} under
+% \XeTeX\ and \LuaTeX.
+%
+% \section{Usage}
+%
+% You can load this package by adding
+% \begin{quote}
+%   |\usepackage{figureversions}|
+% \end{quote}
+% to the preamble of your document.
+%
+% \subsection{High-level document commands}
+%
+% \begin{function}{\lnfigures,\txfigures,\liningfigures,\textfigures}
+% \begin{syntax}
+%    \cs{lnfigures}
+%    \cs{txfigures}
+%    \cs{liningfigures}\marg{text}
+%    \cs{textfigures}\marg{text}
+% \end{syntax}
+% By default, the \pkg{figureversions} package knows two figure styles, `text'
+% and `lining', which can be accessed using the commands \cs{txfigures} and
+% \cs{lnfigures} respectively. Similar to commands like \cs{itshape},
+% these commands are \emph{declarations} and remain in effect until the end of
+% the current group or environment. If you only want to change the figure
+% style for a short amount of text, you can use the corresponding \emph{text
+% font commands} \cs{liningfigures} and \cs{textfigures}, which take as
+% argument the text to which the figure style should apply.
+% \end{function}
+%
+% \begin{function}{\prfigures,\tbfigures,\proportionalfigures,\tabularfigures}
+% \begin{syntax}
+%    \cs{prfigures}
+%    \cs{tbfigures}
+%    \cs{proportionalfigures}\marg{text}
+%    \cs{tabularfigures}\marg{text}
+% \end{syntax}
+% For changing the figure alignment, use the commands \cs{prfigures} and
+% \cs{tbfigures}: while \cs{prfigures} changes to proportional figures, which
+% vary in width, \cs{tbfigures} changes to tabular or \emph{monospaced} figures.
+% As for \cs{linfigures} and \cs{txfigures}, the selected figure
+% alignment remains in effect until the end of the current group or environment;
+% the corresponding text font commands are \cs{proportionalfigures} and
+% \cs{tabularfigures}.
+% \end{function}
+%
+% \begin{function}{\boldmath,\unboldmath,\tabularmath,\proportionalmath}
+% \begin{syntax}
+%    \cs{boldmath}
+%    \cs{unboldmath}
+%    \cs{tabularmath}
+%    \cs{proportionalmath}
+% \end{syntax}
+% By default, \LaTeX\ provides two \emph{math versions}, `normal' and `bold',
+% as well as commands \cs{boldmath} and \cs{unboldmath} for switching between
+% them. The \pkg{figureversions} packages redefines these commands to only
+% change the math font's weight and provides commands \cs{tabularmath} and
+% \cs{proportionalmath} to switch between tabular and proportional figures
+% in math mode.\footnote{Note that these commands have to be executed outside
+% of math mode.} This functionality assumes the presence of additional math
+% versions `tabular' and `boldtabular'; the package will copy the setups of math
+% versions `normal' and `bold' if you do not provide your own declarations.
+% \end{function}
+%
+% \begin{function}{\figureversion}
+% \begin{syntax}
+%   \cs{figureversion}\marg{comma-separated list}
+% \end{syntax}
+% The \cs{figureversion} command can be used to change the figure version by a
+% single command. It takes as argument a comma-separated list of one or more
+% of the following options:\footnote{More options can be added by package
+% authors; see Section~\ref{sect:code-interface}.}
+% \begin{quote}
+% \begin{tabular}{@{}ll}
+% |text|, |osf| & for text figures,\\
+% |lining|, |lf| & for lining figures,\\
+% |tabular|, |tab| & for tabular figures (also in math mode),\\
+% |proportional|, |prop| & for proportional figures (also in math mode).
+% \end{tabular}
+% \end{quote}
+% \end{function}
+%
+% \subsection{Low-level document commands}
+%
+% The low-level commands described in this section are mostly relevant for
+% package authors. They are meant to be be combined with other low-level font
+% selection commands like \cs{fontshape} and \cs{fontseries} and a subsequent
+% call to \cs{selectfont}.
+% Finally, since they rely on the classical \LaTeXe\ font selection scheme --
+% with the exception of \cs{mathweight}  and \cs{mathfigurealignment} -- they
+% would normally not work with \pkg{fontspec}.
+%
+% \begin{function}{\fontfigurestyle}
+% \begin{syntax}
+%   \cs{fontfigurestyle}\marg{figure style}
+% \end{syntax}
+% By default, the \pkg{figureversions} package knows two figure styles: `text'
+% and `lining', but package authors can define additional figure styles; see
+% Section~\ref{sect:code-interface}.
+% \end{function}
+%
+% \begin{function}{\fontfigurealignment}
+% \begin{syntax}
+%   \cs{fontfigurealignment}\marg{figure alignment}
+% \end{syntax}
+% Using this command, you can choose either `proportional' or `tabular' figures.
+% \end{function}
+%
+% \begin{function}{\fontbasefamily}
+% \begin{syntax}
+%   \cs{fontbasefamily}\marg{family name}
+% \end{syntax}
+% Recall that figure versions are implemented on top of the \LaTeXe\ font
+% selection scheme by amending the family name. For instance,
+% |\fontfamily{cantarell-TLF}| selects \emph{Cantarell} with tabular lining
+% figures.
+% The \cs{fontbasefamily} command thus allows you to select the
+% font family independently of the figure version. Hence,
+% |\fontbasefamily{cantarell}| switches to Cantarell, but does not change the
+% current figure style or alignment.
+% \end{function}
+%
+% \begin{function}{\mathweight}
+% \begin{syntax}
+%   \cs{mathweight}\marg{font weight}
+% \end{syntax}
+% The package knows two different math weights `normal' and `bold', which can
+% be accessed by this command. Note that -- like \cs{mathversion} -- this
+% command does \emph{not} work in math mode and takes effect immediately,
+% i.e.\ for all following invocations of math mode.
+% \end{function}
+%
+% \begin{function}{\mathfigurealignment}
+% \begin{syntax}
+%   \cs{mathfigurealignment}\marg{figure alignment}
+% \end{syntax}
+% To change the math figure alignment, use this command. As for
+% \cs{fontfigurealignment}, valid arguments are `proportional` and `tabular`.
+% Like \cs{mathweight}, this command does not work  in math mode and takes
+% effect immediately.
+% \end{function}
+%
+% \subsection{Code-level interface}\label{sect:code-interface}
+%
+% Like other packages implemented in \LaTeX3, this package defines several
+% comands at \emph{code level}, i.e.\ with \cs{ExplSyntaxOn}, which can be
+% used to extend the functionality of this package.
+%
+% \begin{function}{\figureversions_new_figurestyle:nnn,\figureversions_new_figurestyle:Vnn}
+% \begin{syntax}
+%   \cs{figureversions_new_figurestyle:nnn} \marg{name} \marg{proportional suffixes} \marg{tabular suffixes}
+% \end{syntax}
+% Defines a new figure style named \meta{name} with corresponding font family
+% suffixes (given as comma-separated lists, maybe empty) for proportional and
+% tabular figure alignment. For instance, the existing figure style `text'
+% is defined by
+% \begin{quote}
+% |\figureversions_new_figurestyle:nnn {text} {OsF} {TOsF}|
+% \end{quote}
+% \end{function}
+%
+% \begin{function}{\figureversions_new_figureversion:nn}
+% \begin{syntax}
+%   \cs{figureversions_new_figureversion:nn} \marg{option} \marg{code}
+% \end{syntax}
+% Defines a new option for the \cs{figureversion} command: Expands to
+% \meta{code} when \cs{figureversion} is called with \meta{option} among
+% its arguments.
+% \end{function}
+%
+% \section{Compatibility}
+%
+% \subsection{Font support}
+%
+% Within the \LaTeXe\ font selection scheme, the package supports the two most
+% common naming schemes for font families:
+% \begin{enumerate}
+%  \item \meta{family}|-|\meta{suffix} where the suffix is e.g. |OsF| for
+%    proportional text figures or |TLF| for tabular lining figures.
+%  \item \meta{family}\meta{style} where the family is given by a
+%    three-letter lowercase identifier and and \emph{style} is either
+%    |j| for text figures or |x| for lining figures.\footnote{Note that
+%    this scheme does not support different figure alignments.}
+% \end{enumerate}
+% Almost all of the many font packages available on CTAN adhere to one of these
+% conventions, so \pkg{figureversions} works with all of them.
+%
+% Even more fonts are supported with \pkg{fontspec}: Since the
+% \pkg{figureversions} package simply maps commands like \cs{tbfigures} to the
+% corresponding OpenType feature, the package works with any OpenType font that
+% implements one or more of these features.
+%
+% \subsection{Interplay with other packages}
+%
+% Since this package defines the \cs{tbfigures} command to switch to tabular
+% figures, this package plays well and -- in some sense -- enables the
+% \pkg{tabfigures} package\footnote{https://ctan.org/pkg/tabfigures}, which
+% patches several \LaTeX\ commands and environments to use tabular figures. If
+% you are a document author who uses a font with proportional figures by
+% default, the \pkg{tabfigures} package is warmly recommended (also used in
+% this document for e.g.\ the table of contents).
+%
+% As mentioned in the introduction, this package replaces the \pkg{fontaxes}
+% package, which -- as of version~1.1 -- is just a wrapper around
+% this package, adding some internal commands that
+% have historically been used by package authors to define new figure styles.
+% If you are the author of a package that depends on \pkg{fontaxes}, please
+% consider updating you package to depend on this package instead, using the
+% commands described in Section~\ref{sect:code-interface} to define additional
+% figure styles if necessary.
+%
+% \end{documentation}
+%
+% \begin{implementation}
+% \AddToHook{sffamily}{\fontfigurealignment{tabular}}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*package>
+%<@@=figureversions>
+%    \end{macrocode}
+%
+% \subsection{Variables and Constants}
+%
+% First, some constants.
+%    \begin{macrocode}
+\str_const:Nn \c_@@_text_str {text}
+\str_const:Nn \c_@@_lining_str {lining}
+\str_const:Nn \c_@@_proportional_str {proportional}
+\str_const:Nn \c_@@_tabular_str {tabular}
+\str_const:Nn \c_@@_normal_str {normal}
+\str_const:Nn \c_@@_bold_str {bold}
+\str_const:Nn \c_@@_lf_str {LF}
+\str_const:Nn \c_@@_osf_str {OsF}
+\str_const:Nn \c_@@_tlf_str {TLF}
+\str_const:Nn \c_@@_tosf_str {TOsF}
+%    \end{macrocode}
+% This global boolean is set to true when \pkg{fontspec} is loaded.
+%    \begin{macrocode}
+\bool_new:N \g_@@_fontspec_bool
+%    \end{macrocode}
+% The following string variables will hold the current value of the font base
+% family, the font figure style, and the figure alignment, respectively. We
+% initalize them with default values, although these will almost surely be
+% overwritten once a figurestyle selection command is executed.
+%    \begin{macrocode}
+\str_new:N \l_@@_fontbasefamily_str
+\str_new:N \l_@@_fontfigurestyle_str
+\str_new:N \l_@@_fontfigurealignment_str
+\str_set:Nn \l_@@_fontbasefamily_str {cmr}
+\str_set_eq:NN \l_@@_fontfigurestyle_str \c_@@_lining_str
+\str_set_eq:NN \l_@@_fontfigurealignment_str \c_@@_proportional_str
+%    \end{macrocode}
+% The defined figure styles are held in two maps, one each for the two
+% supported figure alignments `proportional' and `tabular'. Those
+% maps take as key the name of the figure style and as value the corresponding
+% suffix of the font family (think |OsF| or |TOsF|).
+%    \begin{macrocode}
+\prop_new:N \g_@@_figurestyles_proportional_prop
+\prop_new:N \g_@@_figurestyles_tabular_prop
+%    \end{macrocode}
+% The possible inputs for the \cs{figureversion} commands and their meanings are
+% held in a map as well.
+%    \begin{macrocode}
+\prop_new:N \g_@@_figureversions_prop
+%    \end{macrocode}
+% For math fonts, we only support changing the weight or the figure alignment.
+% The following two variables will hold the current value of each axis.
+%    \begin{macrocode}
+\str_new:N \l_@@_mathweight_str
+\str_new:N \l_@@_mathalign_str
+%    \end{macrocode}
+%
+% \subsection{Messages}
+%
+%    \begin{macrocode}
+\msg_new:nnn { figureversions } { unknown-figurestyle }
+  { Ignoring~unknown~figure~style~`#1'~\msg_line_context: }
+\msg_new:nnn { figureversions } { unknown-figurealignment }
+  { Ignoring~unknown~figure~alignment~`#1'~\msg_line_context: }
+\msg_new:nnn { figureversions } { unknown-mathweight }
+  { Ignoring~unknown~math~weight~`#1'~\msg_line_context: }
+\msg_new:nnn { figureversions } { unknown-mathfigurealignment }
+  { Ignoring~unknown~math~figure~alignment~`#1'~\msg_line_context: }
+\msg_new:nnn { figureversions } { unknown-figureversion }
+  { Ignoring~unknown~figure~version~`#1'~\msg_line_context: }
+%    \end{macrocode}
+% \subsection{Utility functions}
+%
+% \begin{macro}{\@@_warning:nn}
+% Issues a warning.
+%    \begin{macrocode}
+\cs_new:Nn \@@_warning:nn
+  { \msg_warning:nnn {figureversions} {#1} {#2} }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@@_if_family_exists:nTF}
+% Used to test whether a given font family exists or not.
+%    \begin{macrocode}
+\prg_new_protected_conditional:Nnn \@@_if_family_exists:n { TF }
+  {
+    \group_begin:
+    \fontfamily {#1}
+    \try@load@fontshape
+    \cs_if_eq:cNTF \curr@fontshape \relax
+      { \group_insert_after:N \prg_return_false: }
+      { \group_insert_after:N \prg_return_true: }
+    \group_end:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_split_family:nNNTF,
+%               \@@_split_family:VNNTF,
+%               \@@_split_family_aux:w}
+% Tries to split the font family name given by the \meta{token list}~|#1|
+% into the base name and a variant suffix, delimited by |-|. Sets
+% \meta{string variable}~|#2| to the base name and \meta{string variable}~|#3|
+% to the suffix if the split succeeds.
+%    \begin{macrocode}
+\prg_new_protected_conditional:Nnn \@@_split_family:nNN { TF }
+  { \@@_split_family_aux:w #1 - - \q_stop #2 #3 }
+\prg_generate_conditional_variant:Nnn \@@_split_family:nNN { V } { TF }
+%    \end{macrocode}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_split_family_aux:w #1-#2-#3 \q_stop #4 #5
+  {
+    \tl_if_empty:nTF {#2}
+      { \prg_return_false: }
+      {
+        \str_set:Nn #4 {#1}
+        \str_set:Nn #5 {#2}
+        \prg_return_true:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_copy_mathversion_if_undefined:nn}
+% Declare math version |#1| to be a copy of math version |#2| if |#1| does not
+% exist already. To accomplish this, we have to know that a math version's
+% configuration is basically stored in a macro |\mv@|\meta{name}.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_copy_mathversion_if_undefined:nn
+  {
+    \cs_if_exist:cF {mv@#1}
+      {
+        \DeclareMathVersion {#1}
+        \cs_set_eq:cc {mv@#1} {mv@#2}
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Encoding}
+%
+% \begin{macro}{\@@_encode_suffix_proportional:N}
+% Determines the possible proportional font family suffixes for the
+% current figure style and places the result in the given \meta{seq variable}
+% |#1|. Since some figure styles may only exist in a tabular version, use that
+% as a fallback. Finally, fall back to |LF|, |OsF|, |TLF| and |TOsF| (in that
+% order).
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_encode_suffix_proportional:N
+  {
+    \prop_get:NVNF \g_@@_figurestyles_proportional_prop
+      \l_@@_fontfigurestyle_str \l_tmpa_str
+      {
+        \prop_get:NVNF \g_@@_figurestyles_tabular_prop
+          \l_@@_fontfigurestyle_str \l_tmpa_str
+      }
+      \tl_if_eq:NNTF \l_tmpa_str \q_no_value
+        { \seq_set_eq:NN #1 \c_empty_seq }
+        { \seq_set_from_clist:NN #1 \l_tmpa_str }
+%    \end{macrocode}
+% Since any given font family might have only a restricted number of figure
+% versions (maybe even only tabular ones), we add the well-known suffixes
+% |LF|, |OsF|, |TLF| and |TOsF| to the end of the seq.
+%    \begin{macrocode}
+      \seq_if_in:NVF #1 \c_@@_lf_str { \seq_put_right:NV #1 \c_@@_lf_str }
+      \seq_if_in:NVF #1 \c_@@_osf_str { \seq_put_right:NV #1 \c_@@_osf_str }
+      \seq_if_in:NVF #1 \c_@@_tlf_str { \seq_put_right:NV #1 \c_@@_tlf_str }
+      \seq_if_in:NVF #1 \c_@@_tosf_str { \seq_put_right:NV #1 \c_@@_tosf_str }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_encode_suffix_tabular:N}
+% Determines the possible tabular font family suffixes for the current figure
+% style and places the result in the given \meta{seq variable} |#1|.
+% Since some figure styles may only exist in a proportional version, use that
+% as a fallback.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_encode_suffix_tabular:N
+  {
+    \prop_get:NVNF \g_@@_figurestyles_tabular_prop
+      \l_@@_fontfigurestyle_str \l_tmpa_str
+      {
+        \prop_get:NVN \g_@@_figurestyles_proportional_prop
+          \l_@@_fontfigurestyle_str \l_tmpa_str
+      }
+      \tl_if_eq:NNTF \l_tmpa_str \q_no_value
+        { \seq_set_eq:NN #1 \c_empty_seq }
+        { \seq_set_from_clist:NN #1 \l_tmpa_str }
+%    \end{macrocode}
+% Since any given font family might have only a restricted number of figure
+% versions (maybe even only proportional ones), we add the well-known suffixes
+% |TLF|, |TOsF|, |LF| and |OsF| to the end of the seq.
+%    \begin{macrocode}
+      \seq_if_in:NVF #1 \c_@@_tlf_str { \seq_put_right:NV #1 \c_@@_tlf_str }
+      \seq_if_in:NVF #1 \c_@@_tosf_str { \seq_put_right:NV #1 \c_@@_tosf_str }
+      \seq_if_in:NVF #1 \c_@@_lf_str { \seq_put_right:NV #1 \c_@@_lf_str }
+      \seq_if_in:NVF #1 \c_@@_osf_str { \seq_put_right:NV #1 \c_@@_osf_str }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_encode_suffix:N}
+% Determines the possible font family suffixes corresponding to the current
+% figure style/alignment and places the result in the given
+% \meta{seq variable} |#1|.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_encode_suffix:N
+  {
+    \str_if_eq:NNTF \l_@@_fontfigurealignment_str \c_@@_tabular_str
+      { \@@_encode_suffix_tabular:N #1 }
+      { \@@_encode_suffix_proportional:N #1 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_encode_suffix_alt:N}
+% Determines the alternate one-letter suffix for the current
+% figure style and places the result in the given \meta{string variable}
+% |#1|. Note that the suffix only depends on the current figure style
+% and not on the current figure alignment.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_encode_suffix_alt:N
+  {
+    \str_if_eq:NNTF \l_@@_fontfigurestyle_str \c_@@_text_str
+      { \str_set:Nn #1 {j} }
+      { \str_set:Nn #1 {x} }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_set_fontfamily:}
+% Sets the font family accoding to the current figure style, figure alignment
+% and base family.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_set_fontfamily:
+  {
+    \bool_set_false:N \l_tmpa_bool
+    \@@_encode_suffix:N \l_tmpa_seq
+    \seq_map_inline:Nn \l_tmpa_seq
+      {
+        \@@_if_family_exists:nTF { \l_@@_fontbasefamily_str-##1 }
+          {
+            \fontfamily { \l_@@_fontbasefamily_str-##1 }
+            \seq_map_break:n { \bool_set_true:N \l_tmpa_bool }
+          }
+      }
+%    \end{macrocode}
+% If no suffix could be applied, try the alternate scheme.
+%    \begin{macrocode}
+    \bool_if:NF \l_tmpa_bool
+      {
+        \@@_encode_suffix_alt:N \l_tmpa_str
+        \@@_if_family_exists:nTF { \l_@@_fontbasefamily_str\l_tmpa_str }
+          { \fontfamily { \l_@@_fontbasefamily_str\l_tmpa_str } }
+          { \fontfamily \l_@@_fontbasefamily_str }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_set_mathversion:}
+% Sets the math version according to the current math weight and figure
+% alignment.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_set_mathversion:
+  {
+    \str_clear:N \l_tmpa_str
+    \str_if_eq:NNT \l_@@_mathweight_str \c_@@_bold_str
+      { \str_put_right:Nn \l_tmpa_str { bold } }
+    \str_if_eq:NNT \l_@@_mathalign_str \c_@@_tabular_str
+      { \str_put_right:Nn \l_tmpa_str { tabular } }
+    \str_if_empty:NTF \l_tmpa_str
+      { \mathversion { normal } }
+      { \mathversion { \l_tmpa_str } }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Decoding}
+%
+% \begin{macro}{\@@_decode_suffix:n,\@@_decode_suffix:V}
+% Takes a font family suffix like |TOsF| and sets the current font
+% figure style and figure alignment accordingly. Iterates through all
+% suffixes corresponding to the proportional version of a figure style
+% before it iterates through all suffixes corresponding to the tabular
+% versions until the given suffix is found. Does not alter the current
+% figure alignment if a figure style has no tabular version or the suffix
+% is ambiguous.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_decode_suffix:n
+  {
+    \str_set:Nn \l_tmpa_str {#1}
+    \bool_set_false:N \l_tmpa_bool
+    \prop_map_inline:Nn \g_@@_figurestyles_proportional_prop
+      {
+        \seq_set_from_clist:Nn \l_tmpa_seq {##2}
+        \seq_if_in:NVT \l_tmpa_seq \l_tmpa_str
+          {
+            \str_set:Nn \l_@@_fontfigurestyle_str {##1}
+            \prop_get:NnNT \g_@@_figurestyles_tabular_prop {##1} \l_tmpb_str
+              {
+                \seq_set_from_clist:NN \l_tmpa_seq \l_tmpb_str
+                \seq_if_in:NVF \l_tmpa_seq \l_tmpa_str
+                  {
+                    \str_set_eq:NN \l_@@_fontfigurealignment_str
+                      \c_@@_proportional_str
+                  }
+              }
+            \prop_map_break:n { \bool_set_true:N \l_tmpa_bool }
+          }
+      }
+    \bool_if:NF \l_tmpa_bool
+      {
+        \prop_map_inline:Nn \g_@@_figurestyles_tabular_prop
+          {
+            \seq_set_from_clist:Nn \l_tmpa_seq {##2}
+            \seq_if_in:NVT \l_tmpa_seq \l_tmpa_str
+              {
+                \str_set:Nn \l_@@_fontfigurestyle_str {##1}
+                \str_set_eq:NN \l_@@_fontfigurealignment_str
+                  \c_@@_tabular_str
+                \prop_map_break:
+              }
+          }
+      }
+  }
+\cs_generate_variant:Nn \@@_decode_suffix:n { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_decode_fontfamily_alt:n,
+%               \@@_decode_fontfamily_alt:V,
+%               \@@_decode_fontfamily_alt_aux:w}
+% Tries to decode the given font family name using the \emph{alternate}
+% four-letter scheme where the last letter is either |x| for lining or
+% |j| for text and sets the font base family and figure style accordingly.
+% Note that the current figure alignment is not altered by this command.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_decode_fontfamily_alt:n
+  {
+    \str_set:Nn \l_@@_fontbasefamily_str {#1}
+    \@@_decode_fontfamily_alt_aux:w #1 \q_stop
+  }
+\cs_generate_variant:Nn \@@_decode_fontfamily_alt:n { V }
+%    \end{macrocode}
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_decode_fontfamily_alt_aux:w #1#2#3#4 \q_stop
+  {
+    \str_if_eq:nnT {#4} {x}
+      {
+        \str_set:Nn \l_@@_fontbasefamily_str { #1#2#3 }
+        \str_set_eq:NN \l_@@_fontfigurestyle_str \c_@@_lining_str
+      }
+    \str_if_eq:nnT {#4} {j}
+      {
+        \str_set:Nn \l_@@_fontbasefamily_str { #1#2#3 }
+        \str_set_eq:NN \l_@@_fontfigurestyle_str \c_@@_text_str
+      }  
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_get_fontfamily:}
+% Evaluates the current font family and infers the current figure
+% style, figure alignment and base family.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_get_fontfamily:
+  {
+    \@@_split_family:VNNTF \f@family \l_@@_fontbasefamily_str \l_tmpa_str
+      { \@@_decode_suffix:V \l_tmpa_str }
+      { \@@_decode_fontfamily_alt:V \f@family }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@@_get_mathversion:}
+% Evaluates the current math version and infers the current math weight
+% and figure alignment.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_get_mathversion:
+  {
+    \str_if_in:NnTF \math@version { bold }
+      { \str_set_eq:NN \l_@@_mathweight_str \c_@@_bold_str }
+      { \str_set_eq:NN \l_@@_mathweight_str \c_@@_normal_str }
+    \str_if_in:NnTF \math@version { tabular }
+      { \str_set_eq:NN \l_@@_mathalign_str \c_@@_tabular_str }
+      { \str_set_eq:NN \l_@@_mathalign_str \c_@@_proportional_str }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{User functions}
+%
+% \begin{macro}{\fontfigurestyle,\@@_fontfigurestyle:n,\@@_fontfigurestyle:e}
+% Sets the font figure style.
+%    \begin{macrocode}
+\ProvideDocumentCommand \fontfigurestyle {m}
+  { \@@_fontfigurestyle:e {#1} }
+%    \end{macrocode}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_fontfigurestyle:n
+  {
+    \bool_if:nTF
+      {
+        \prop_if_in_p:Nn \g_@@_figurestyles_proportional_prop {#1} ||
+        \prop_if_in_p:Nn \g_@@_figurestyles_tabular_prop {#1}
+      }
+      {
+        \@@_get_fontfamily:
+        \str_set:Nn \l_@@_fontfigurestyle_str {#1}
+        \@@_set_fontfamily:
+      }
+      {
+        \@@_warning:nn { unknown-figurestyle } {#1}
+      }
+  }
+\cs_generate_variant:Nn \@@_fontfigurestyle:n { e }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\fontfigurealignment,
+%               \@@_fontfigurealignment:n,
+%               \@@_fontfigurealignment:e}
+% Sets the font figure alignment.
+%    \begin{macrocode}
+\ProvideDocumentCommand \fontfigurealignment {m}
+  { \@@_fontfigurealignment:e {#1} }
+%    \end{macrocode}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_fontfigurealignment:n
+  {
+    \bool_if:nTF
+      {
+        \str_if_eq_p:Vn \c_@@_proportional_str {#1} ||
+        \str_if_eq_p:Vn \c_@@_tabular_str {#1}
+      }
+      {
+        \@@_get_fontfamily:
+        \str_set:Nn \l_@@_fontfigurealignment_str {#1}
+        \@@_set_fontfamily:
+      }
+      {
+        \@@_warning:nn { unknown-figurealignment } {#1}
+      }
+  }
+\cs_generate_variant:Nn \@@_fontfigurealignment:n { e }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\fontbasefamily}
+% Sets the base font family.
+%    \begin{macrocode}
+\ProvideDocumentCommand \fontbasefamily {m}
+  {
+    \@@_get_fontfamily:
+    \str_set:Ne \l_@@_fontbasefamily_str {#1}
+    \@@_set_fontfamily:
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mathweight,\@@_mathweight:n,\@@_mathweight:e}
+% Sets the math weight.
+%    \begin{macrocode}
+\ProvideDocumentCommand \mathweight {m}
+  { \@@_mathweight:e {#1} }
+%    \end{macrocode}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_mathweight:n
+  {
+    \bool_if:nTF
+      {
+        \str_if_eq_p:Vn \c_@@_normal_str {#1} ||
+        \str_if_eq_p:Vn \c_@@_bold_str {#1}
+      }
+      {
+        \@@_get_mathversion:
+        \str_set:Nn \l_@@_mathweight_str {#1}
+        \@@_set_mathversion:
+      }
+      {
+        \@@_warning:nn { unknown-mathweight } {#1}
+      }
+  }
+\cs_generate_variant:Nn \@@_mathweight:n { e }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\mathfigurealignment,
+%               \@@_mathfigurealignment:n,
+%               \@@_mathfigurealignment:e}
+% Sets the math figure alignment.
+%    \begin{macrocode}
+\ProvideDocumentCommand \mathfigurealignment {m}
+  { \@@_mathfigurealignment:e {#1} }
+%    \end{macrocode}
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_mathfigurealignment:n
+  {
+    \bool_if:nTF
+      {
+        \str_if_eq_p:Vn \c_@@_proportional_str {#1} ||
+        \str_if_eq_p:Vn \c_@@_tabular_str {#1}
+      }
+      {
+        \@@_get_mathversion:
+        \str_set:Nn \l_@@_mathalign_str {#1}
+        \@@_set_mathversion:
+      }
+      {
+        \@@_warning:nn { unknown-mathfigurealignment } {#1}
+      }
+  }
+\cs_generate_variant:Nn \@@_mathfigurealignment:n { e }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\txfigures,\lnfigures}
+% Higher-level commands for choosing the font figure style.
+%    \begin{macrocode}
+\ProvideDocumentCommand \txfigures {}
+  {
+    \@nomath \txfigures
+    \bool_if:NTF \g_@@_fontspec_bool
+      { \addfontfeature{ Numbers = OldStyle } }
+      {
+        \fontfigurestyle { \c_@@_text_str }
+        \selectfont
+      }
+  }
+\ProvideDocumentCommand \lnfigures {}
+  {
+    \@nomath \lnfigures
+    \bool_if:NTF \g_@@_fontspec_bool
+      { \addfontfeature{ Numbers = Lining } }
+      {
+        \fontfigurestyle { \c_@@_lining_str }
+        \selectfont
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\prfigures,\tbfigures}
+% Higher-level commands for choosing the font figure alignment.
+%    \begin{macrocode}
+\ProvideDocumentCommand \prfigures {}
+  {
+    \@nomath\prfigures
+    \bool_if:NTF \g_@@_fontspec_bool
+      { \addfontfeature{ Numbers = Proportional } }
+      {
+        \fontfigurealignment { \c_@@_proportional_str }
+        \selectfont
+      }
+  }
+\ProvideDocumentCommand \tbfigures {}
+  {
+    \@nomath\tbfigures
+    \bool_if:NTF \g_@@_fontspec_bool
+      { \addfontfeature{ Numbers = Monospaced } }
+      {
+        \fontfigurealignment { \c_@@_tabular_str }
+        \selectfont
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\boldmath,\unboldmath}
+% Reimplementation of \cs{boldmath} and \cs{unboldmath} to only change the
+% math weight.
+%    \begin{macrocode}
+\RenewDocumentCommand \boldmath {}
+  {
+    \@nomath \boldmath
+    \mathweight { \c_@@_bold_str }
+  }
+\RenewDocumentCommand \unboldmath {}
+  {
+    \@nomath \unboldmath
+    \mathweight { \c_@@_normal_str }
+  }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\tabularmath,\proportionalmath}
+% Higher-level commands to change the math figure alignment.
+%    \begin{macrocode}
+\ProvideDocumentCommand \proportionalmath {}
+  {
+    \@nomath \proportionalmath
+    \mathfigurealignment { \c_@@_proportional_str }
+  }
+\ProvideDocumentCommand \tabularmath {}
+  {
+    \@nomath \tabularmath
+    \mathfigurealignment { \c_@@_tabular_str }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\textfigures,\liningfigures,
+%               \tabularfigures,\proportionalfigures}
+% Text font commands which apply a certain figure style or figure alignment
+% to their argument.
+%    \begin{macrocode}
+\DeclareTextFontCommand {\textfigures} {\txfigures}
+\DeclareTextFontCommand {\liningfigures }{\lnfigures}
+\DeclareTextFontCommand {\tabularfigures} {\tbfigures\tabularmath}
+\DeclareTextFontCommand {\proportionalfigures} {\prfigures\proportionalmath}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\figureversion}
+% Convenience macro for setting font figure style and alignment simultaneously.
+%    \begin{macrocode}
+\ProvideDocumentCommand \figureversion {m}
+  {
+    \clist_set:Ne \l_tmpa_clist {#1}
+    \clist_map_inline:Nn \l_tmpa_clist
+      { 
+        \prop_get:NnNTF \g_@@_figureversions_prop {##1} \l_tmpa_tl
+          { \tl_use:N \l_tmpa_tl }
+          { \@@_warning:nn { unknown-figureversion } {##1} }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Public code-level functions}
+%
+% \begin{macro}{\figureversions_new_figurestyle:nnn,
+%              \figureversions_new_figurestyle:Vnn,
+%              \@@_new_figurestyle_proportional:nn,
+%              \@@_new_figurestyle_tabular:nn}
+% Defines the figure style |#1| with the corresponding font family suffixes
+% listed in the \meta{comma lists} |#2| for proportional figures and |#3| for
+% tabular figures. Does nothing if |#1| is already defined as a figure style.
+%    \begin{macrocode}
+\cs_new_protected:Nn \@@_new_figurestyle_proportional:nn
+  {
+    \prop_gput_if_not_in:Nne \g_@@_figurestyles_proportional_prop {#1}
+      { \tl_to_str:n {#2} }
+  }
+\cs_new_protected:Nn \@@_new_figurestyle_tabular:nn
+  {
+    \prop_gput_if_not_in:Nne \g_@@_figurestyles_tabular_prop {#1}
+      { \tl_to_str:n {#2} }
+  }
+\cs_new_protected:Nn \figureversions_new_figurestyle:nnn
+  {
+    \@@_new_figurestyle_proportional:nn {#1} {#2}
+    \@@_new_figurestyle_tabular:nn {#1} {#3}
+  }
+\cs_generate_variant:Nn \figureversions_new_figurestyle:nnn { V }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\figureversions_new_figureversion:nn}
+% Defines the figure version |#1| and assigns the code |#2| to it.
+% Does nothing if |#1| is already defined as a figure version.
+%    \begin{macrocode}
+\cs_new_protected:Nn \figureversions_new_figureversion:nn
+  { \prop_gput_if_not_in:Nnn \g_@@_figureversions_prop {#1} {#2} }
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Initialization}
+%
+% Finally, we declare the pre-defined figure styles `text' and `lining' and the
+% initial keys for the  \cs{figureversion} command.
+%    \begin{macrocode}
+\figureversions_new_figurestyle:Vnn \c_@@_text_str { OsF  } { TOsF }
+\figureversions_new_figurestyle:Vnn \c_@@_lining_str { LF } { TLF }
+%    \end{macrocode}
+%    \begin{macrocode}
+\figureversions_new_figureversion:nn { text } { \txfigures }
+\figureversions_new_figureversion:nn { osf } { \txfigures }
+\figureversions_new_figureversion:nn { lining } { \lnfigures }
+\figureversions_new_figureversion:nn { lf } { \lnfigures }
+\figureversions_new_figureversion:nn { tabular }
+  { \tbfigures \tabularmath }
+\figureversions_new_figureversion:nn { tab }
+  { \tbfigures \tabularmath }
+\figureversions_new_figureversion:nn { proportional }
+  { \prfigures \proportionalmath }
+\figureversions_new_figureversion:nn { prop }
+  { \prfigures \proportionalmath }
+%    \end{macrocode}
+%
+% \subsection{Hooks}
+%
+% At the start of the document, we check whether math versions `tabular' and
+% `boldtabular' have been defined. If not, we provide a default by copying the
+% state of `normal' respectively `bold'.
+%    \begin{macrocode}
+\AtBeginDocument
+  {
+    \@@_copy_mathversion_if_undefined:nn { tabular } { normal }
+    \@@_copy_mathversion_if_undefined:nn { boldtabular } { bold }
+%    \end{macrocode}
+% Test for \pkg{fontspec}.
+%    \begin{macrocode}
+    \IfPackageLoadedT { fontspec }
+      { \bool_gset_true:N \g_@@_fontspec_bool }
+%    \end{macrocode}     
+% Finally, we redefine some commands for use in PDF strings.
+%    \begin{macrocode}
+    \IfPackageLoadedT { hyperref }
+      {
+        \pdfstringdefDisableCommands
+          {
+            \cs_set_eq:NN \figureversion \use_none:n
+            \cs_set_eq:NN \fontfigurestyle \use_none:n
+            \cs_set_eq:NN \fontfigurealignment \use_none:n
+            \cs_set_eq:NN \fontbasefamily \use_none:n
+            \cs_set_eq:NN \mathweight \use_none:n
+            \cs_set_eq:NN \mathfigurealignment \use_none:n
+            \cs_set_eq:NN \txfigures \relax
+            \cs_set_eq:NN \lnfigures \relax
+            \cs_set_eq:NN \prfigures \relax
+            \cs_set_eq:NN \tbfigures \relax
+            \cs_set_eq:NN \proportionalmath \relax
+            \cs_set_eq:NN \tabularmath \relax
+            \cs_set_eq:NN \textfigures \use:n
+            \cs_set_eq:NN \liningfigures \use:n
+            \cs_set_eq:NN \tabularfigures \use:n
+            \cs_set_eq:NN \proportionalfigures \use:n
+          }
+      }
+  }
+%</package>
+%    \end{macrocode}
+%
+% \RemoveFromHook{sffamily}
+% \end{implementation}
+%
+% \begin{thebibliography}{9}
+%
+% \bibitem{nfss}
+% \LaTeX\ Project Team:
+% \LaTeXe\ font selection.
+% \url{https://www.latex-project.org/help/documentation/fntguide.pdf}
+%
+% \bibitem{ltnews31}
+% \LaTeX\ News. Issue 31, February 2020.
+% \url{https://www.latex-project.org/news/latex2e-news/ltnews31.pdf}
+%
+% \end{thebibliography}
+%
+% \Finale

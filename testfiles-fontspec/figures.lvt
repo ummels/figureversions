@@ -1,0 +1,150 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[silent]{fontspec}
+\usepackage{figureversions}
+
+\begin{document}
+
+\fontspec{Cantarell}[
+  ItalicFont={*-Regular},
+  SmallCapsFont={*-Regular},
+  BoldFont={*-Bold},
+  BoldItalicFont={*-Bold}
+]
+
+\START
+
+\TEST{\txfigures} {
+  \txfigures
+  \TYPEFEATURES
+}
+
+\TEST{\lnfigures} {
+  \lnfigures
+  \TYPEFEATURES
+}
+
+\TEST{\tbfigures} {
+  \tbfigures
+  \TYPEFEATURES
+}
+
+\TEST{\prfigures} {
+  \prfigures
+  \TYPEFEATURES
+}
+
+\TEST{\txfigures\tbfigures} {
+  \txfigures
+  \tbfigures
+  \TYPEFEATURES
+}
+
+\TEST{\lnfigures\tbfigures} {
+  \lnfigures
+  \tbfigures
+  \TYPEFEATURES
+}
+
+\TEST{\tbfigures\txfigures} {
+  \tbfigures
+  \txfigures
+  \TYPEFEATURES
+}
+
+\TEST{\tbfigures\lnfigures} {
+  \tbfigures
+  \lnfigures
+  \TYPEFEATURES
+}
+
+\TEST{\txfigures\prfigures} {
+  \txfigures
+  \prfigures
+  \TYPEFEATURES
+}
+
+\TEST{\lnfigures\prfigures} {
+  \lnfigures
+  \prfigures
+  \TYPEFEATURES
+}
+
+\TEST{\prfigures\txfigures} {
+  \prfigures
+  \txfigures
+  \TYPEFEATURES
+}
+
+\TEST{\prfigures\lnfigures} {
+  \prfigures
+  \lnfigures
+  \TYPEFEATURES
+}
+
+\TEST{\lnfigures\txfigures} {
+  \lnfigures
+  \txfigures
+  \TYPEFEATURES
+}
+
+\TEST{\txfigures\tbfigures\lnfigures} {
+  \txfigures
+  \tbfigures
+  \lnfigures
+  \TYPEFEATURES
+}
+
+\TEST{\lnfigures\tbfigures\txfigures} {
+  \lnfigures
+  \tbfigures
+  \txfigures
+  \TYPEFEATURES
+}
+
+\TEST{\tbfigures\txfigures\prfigures} {
+  \tbfigures
+  \txfigures
+  \prfigures
+  \TYPEFEATURES
+}
+
+\TEST{\tbfigures\lnfigures\prfigures} {
+  \tbfigures
+  \lnfigures
+  \prfigures
+  \TYPEFEATURES
+}
+
+\TEST{\txfigures\prfigures\lnfigures} {
+  \txfigures
+  \prfigures
+  \lnfigures
+  \TYPEFEATURES
+}
+
+\TEST{\lnfigures\prfigures\txfigures} {
+  \lnfigures
+  \prfigures
+  \txfigures
+  \TYPEFEATURES
+}
+
+\TEST{\prfigures\txfigures\tbfigures} {
+  \prfigures
+  \txfigures
+  \tbfigures
+  \TYPEFEATURES
+}
+
+\TEST{\prfigures\lnfigures\tbfigures} {
+  \prfigures
+  \lnfigures
+  \tbfigures
+  \TYPEFEATURES
+}
+
+\END

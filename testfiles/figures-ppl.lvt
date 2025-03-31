@@ -1,0 +1,84 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{figureversions}
+
+\begin{document}
+
+\fontfamily{ppl}
+\selectfont
+
+\START
+
+\TEST{\txfigures} {
+  \txfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\lnfigures} {
+  \lnfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\tbfigures} {
+  \tbfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\prfigures} {
+  \prfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\txfigures\tbfigures} {
+  \txfigures
+  \tbfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\lnfigures\tbfigures} {
+  \lnfigures
+  \tbfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\tbfigures\txfigures} {
+  \tbfigures
+  \txfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\tbfigures\lnfigures} {
+  \tbfigures
+  \lnfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\txfigures\prfigures} {
+  \txfigures
+  \prfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\lnfigures\prfigures} {
+  \lnfigures
+  \prfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\prfigures\txfigures} {
+  \prfigures
+  \txfigures
+  \TYPE{\f@family}
+}
+
+\TEST{\prfigures\lnfigures} {
+  \prfigures
+  \lnfigures
+  \TYPE{\f@family}
+}
+
+\END

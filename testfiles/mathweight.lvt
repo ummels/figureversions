@@ -1,0 +1,49 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{figureversions}
+
+\begin{document}
+
+$1$
+
+\START
+
+\proportionalmath
+
+\TEST{normal}{
+  \mathweight{normal}
+  \TYPE{\math@version}
+}
+
+\TEST{bold}{
+  \mathweight{bold}
+  \TYPE{\math@version}
+}
+
+\TEST{foo}{
+  \mathweight{foo}
+  \TYPE{\math@version}
+}
+
+\tabularmath
+
+\TEST{normal (tabular)}{
+  \mathweight{normal}
+  \TYPE{\math@version}
+}
+
+\TEST{bold (tabular)}{
+  \mathweight{bold}
+  \TYPE{\math@version}
+}
+
+\TEST{foo (tabular)}{
+  \mathweight{foo}
+  \TYPE{\math@version}
+}
+
+\END

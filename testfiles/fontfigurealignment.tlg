@@ -1,0 +1,46 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+============================================================
+TEST 1: proportional (text)
+============================================================
+cantarell-OsF
+============================================================
+============================================================
+TEST 2: tabular (text)
+============================================================
+LaTeX Font Info:    Trying to load font information for T1+cantarell-TOsF on input line ....
+(../T1cantarell-TOsF.fd
+File: T1cantarell-TOsF.fd ....-..-.. Font definitions for T1/cantarell-TOsF.
+)
+cantarell-TOsF
+============================================================
+============================================================
+TEST 3: foo (text)
+============================================================
+Package figureversions Warning: Ignoring unknown figure alignment `foo' on line ...
+cantarell-OsF
+============================================================
+============================================================
+TEST 4: proportional (lining)
+============================================================
+LaTeX Font Info:    Trying to load font information for T1+cantarell-LF on input line ....
+(../T1cantarell-LF.fd
+File: T1cantarell-LF.fd ....-..-.. Font definitions for T1/cantarell-LF.
+)
+cantarell-LF
+============================================================
+============================================================
+TEST 5: tabular (lining)
+============================================================
+LaTeX Font Info:    Trying to load font information for T1+cantarell-TLF on input line ....
+(../T1cantarell-TLF.fd
+File: T1cantarell-TLF.fd ....-..-.. Font definitions for T1/cantarell-TLF.
+)
+cantarell-TLF
+============================================================
+============================================================
+TEST 6: foo (lining)
+============================================================
+Package figureversions Warning: Ignoring unknown figure alignment `foo' on line ...
+cantarell-LF
+============================================================

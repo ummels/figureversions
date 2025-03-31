@@ -1,0 +1,48 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{figureversions}
+
+\begin{document}
+
+\fontfamily{cantarell-OsF}
+\selectfont
+
+\START
+
+\TEST{textfigures}{
+  \test{1 \textfigures{2} 3}
+}
+
+\TEST{liningfigures}{
+  \test{1 \liningfigures{2} 3}
+}
+
+\TEST{tabularfigures}{
+  \test{1 \tabularfigures{2} 3}
+}
+
+\TEST{proportionalfigures}{
+  \test{1 \proportionalfigures{2} 3}
+}
+
+\TEST{tabularfigures+liningfigures}{
+  \test{1 \tabularfigures{2 \liningfigures{3} 4} 5}
+}
+
+\TEST{liningfigures+tabularfigures}{
+  \test{1 \liningfigures{2 \tabularfigures{3} 4} 5}
+}
+
+\TEST{liningfigures+textfigures}{
+  \test{1 \liningfigures{2 \textfigures{3} 4} 5}
+}
+
+\TEST{tabularfigures+proportionalfigures}{
+  \test{1 \tabularfigures{2 \proportionalfigures{3} 4} 5}
+}
+
+\END

@@ -1,0 +1,61 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{figureversions}
+
+\begin{document}
+
+$1$
+
+\START
+
+\TEST{\boldmath}{
+  \boldmath
+  \TYPE{\math@version}
+}
+
+\TEST{\unboldmath}{
+  \unboldmath
+  \TYPE{\math@version}
+}
+
+\TEST{\tabularmath}{
+  \tabularmath
+  \TYPE{\math@version}
+}
+
+\TEST{\proportionalmath}{
+  \proportionalmath
+  \TYPE{\math@version}
+}
+
+\TEST{\boldmath\tabularmath}{
+  \boldmath
+  \tabularmath
+  \TYPE{\math@version}
+}
+
+\TEST{\tabularmath\boldmath}{
+  \tabularmath
+  \boldmath
+  \TYPE{\math@version}
+}
+
+\TEST{\boldmath\tabularmath\unboldmath}{
+  \boldmath
+  \tabularmath
+  \unboldmath
+  \TYPE{\math@version}
+}
+
+\TEST{\tabularmath\boldmath\proportionalmath}{
+  \tabularmath
+  \boldmath
+  \proportionalmath
+  \TYPE{\math@version}
+}
+
+\END

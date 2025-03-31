@@ -1,0 +1,18 @@
+\input{regression-test}
+\input{test}
+
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{figureversions}
+
+\renewcommand{\rmdefault}{lmr}
+
+\begin{document}
+
+\START
+
+\section{o123 \liningfigures{l123} \tabularfigures{t123}
+  \figureversion{text,text,lining,text,proportional}op123}
+
+\end{document}
