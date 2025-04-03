@@ -1,0 +1,15 @@
+\ExplSyntaxOn
+
+\debug_on:n {check-declarations,check-expressions,deprecation}
+
+\NewDocumentCommand \TYPEFEATURES {} {
+  \clist_map_inline:nn {onum,lnum,pnum,tnum}
+    {
+      \fontspec_if_current_feature:nT {+#1}
+        { \TYPE{#1} }
+    }
+}
+
+\ExplSyntaxOff
+
+\makeatletter
