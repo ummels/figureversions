@@ -1,8 +1,6 @@
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
@@ -10,19 +8,18 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-permissions: 
-  contents: write
+permissions:
+  contents: read
 
 jobs:
-  test-on-iot-texlive:
-    runs-on: ubuntu-24.04
-    name: Tests
+  check:
+    runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/islandoftex/images/texlive:latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Run l3build
+      - name: Run checks
         run: l3build check --show-log-on-error -q -H
       - name: Archive failed test output
         if: ${{ always() }}
@@ -30,29 +27,36 @@ jobs:
         with:
           name: testfiles
           retention-days: 3
-  doc:
-    runs-on: ubuntu-24.04
+
+  build-docs:
+    runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/islandoftex/images/texlive:latest
-    name: Documentation
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Run l3build
-        run: l3build doc -q -H
-      - name: Archive documentation
-        uses: actions/upload-artifact@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Build documentation
+        run: l3build doc
+      - name: Move documentation
+        run: mkdir docs && mv *.pdf docs
+      - name: Upload documentation
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: Documentation
-          path: "*.pdf"
-          retention-days: 5
-      - name: Move PDF
-        run: mkdir public && mv *.pdf public
-      - name: Deploy to GH Pages
-        uses: crazy-max/ghaction-github-pages@v4
-        if: github.ref == 'refs/heads/main'
-        with:
-          target_branch: gh-pages
-          build_dir: public
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: 'docs'
+
+  deploy-docs:
+    needs: build-docs
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
