@@ -17,7 +17,9 @@ To use this package, include
 
     \usepackage{figureversions}
 
-in the preamble of your LaTeX document. See the PDF documentation for details.
+in the preamble of your LaTeX document. See the
+[PDF documentation](https://ummels.github.io/figureversions/figureversions.pdf)
+for details.
 
 ## License
  
