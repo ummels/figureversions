@@ -10,8 +10,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-jobs:
+permissions: 
+  contents: write
 
+jobs:
   test-on-iot-texlive:
     runs-on: ubuntu-24.04
     name: Tests
@@ -28,7 +30,6 @@ jobs:
         with:
           name: testfiles
           retention-days: 3
-
   doc:
     runs-on: ubuntu-24.04
     container:
@@ -45,14 +46,13 @@ jobs:
           name: Documentation
           path: "*.pdf"
           retention-days: 5
-      - name: move pdf
-        run: mkdir -p pdf-output && mv *.pdf pdf-output/.
-      - uses: crazy-max/ghaction-github-pages@v4
-        # only publish pdf from main branch
+      - name: Move PDF
+        run: mkdir public && mv *.pdf public
+      - name: Deploy to GH Pages
+        uses: crazy-max/ghaction-github-pages@v4
         if: github.ref == 'refs/heads/main'
         with:
-          target_branch: pdf-output
-          build_dir: pdf-output
-          commit_message: Publish PDF Output
+          target_branch: gh-pages
+          build_dir: public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
