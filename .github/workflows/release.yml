@@ -21,6 +21,4 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            figureversions-ctan.zip
-            figureversions.pdf
+          files: figureversions-ctan.zip
