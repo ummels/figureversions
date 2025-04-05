@@ -8,6 +8,9 @@ document. The package works with many font packages available on CTAN
 as well as with most OpenType fonts under XeTeX and LuaTeX in combination
 with fontspec.
 
+The development of this font package is hosted at
+[GitHub](https://github.com/ummels/figureversions).
+
 ## Usage
 
 To use this package, include
@@ -15,8 +18,7 @@ To use this package, include
     \usepackage{figureversions}
 
 in the preamble of your LaTeX document. See the
-[PDF documentation](https://ummels.github.io/figureversions/figureversions.pdf)
-for details.
+[PDF documentation](figureversions.pdf) for details.
 
 ## License
  
