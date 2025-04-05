@@ -53,11 +53,11 @@
 \end{document}
 %</driver>
 %<*package>
-\ProvidesExplPackage {figureversions} {2025-04-01} {1.0} {Figure versions}
+\ProvidesExplPackage {figureversions} {2025-04-05} {1.0} {Figure versions}
 %</package>
 % \fi
 %
-% \changes{v1.0}{2025-04-01}{Inital version}
+% \changes{v1.0}{2025-04-05}{Initial version}
 %
 % \GetFileInfo{figureversions.sty}
 %
@@ -105,7 +105,7 @@
 % The \pkg{figureversions} package not only makes it easier to switch figure
 % versions, but it also lets you change the two dimensions of a figure version
 % separately: \emph{figure style} and \emph{figure alignment}. While figure
-% style is solely about the the apperance of figures, figure alignment
+% style is solely about the the appearance of figures, figure alignment
 % is concerned with the width of figures. In particular, \emph{tabular}
 % figures all have the same width, so multiple-digit numbers nicely line up
 % when stacked on top of each other.%
@@ -126,7 +126,7 @@
 % \LaTeX\ users (i.e.\ not only when using \XeTeX\ or \LuaTeX).
 % Since the concept of figure versions is not specific to Minion Pro, the
 % corresponding functionality was then incorporated by Andreas Bühmann into a
-% seperate package called \pkg{fontaxes}.\kern-0.15em%
+% separate package called \pkg{fontaxes}.\kern-0.15em%
 % \footnote{\url{https://ctan.org/pkg/fontaxes}} The \pkg{fontaxes}
 % package does not only support different figure versions, but has also split
 % the \emph{shape} of a font into two dimensions (`axes'), which can be
@@ -283,7 +283,7 @@
 % \subsection{Code-level interface}\label{sect:code-interface}
 %
 % Like other packages implemented in \LaTeX3, this package defines several
-% comands at \emph{code level}, i.e.\ with \cs{ExplSyntaxOn}, which can be
+% commands at \emph{code level}, i.e.\ with \cs{ExplSyntaxOn}, which can be
 % used to extend the functionality of this package.
 %
 % \begin{function}{\figureversions_new_figurestyle:nnn,\figureversions_new_figurestyle:Vnn}
@@ -382,8 +382,8 @@
 %    \end{macrocode}
 % The following string variables will hold the current value of the font base
 % family, the font figure style, and the figure alignment, respectively. We
-% initalize them with default values, although these will almost surely be
-% overwritten once a figurestyle selection command is executed.
+% initialize them with default values, although these will almost surely be
+% overwritten once a figure style selection command is executed.
 %    \begin{macrocode}
 \str_new:N \l_@@_fontbasefamily_str
 \str_new:N \l_@@_fontfigurestyle_str
