@@ -6,6 +6,10 @@
 \usepackage[T1]{fontenc}
 \usepackage{figureversions}
 
+\ExplSyntaxOn
+\figureversions_new_figurestyle:nnn {foo} {Foo,foo} {TFoo,Tfoo}
+\ExplSyntaxOff
+
 \begin{document}
 
 \fontfamily{cantarell-OsF}
@@ -28,6 +32,11 @@
   \TYPE{\f@family}
 }
 
+\TEST{non-existing (proportional)}{
+  \fontfigurestyle{non-existing}
+  \TYPE{\f@family}
+}
+
 \fontfamily{cantarell-TOsF}
 
 \TEST{lining (tabular)}{
@@ -42,6 +51,11 @@
 
 \TEST{foo (tabular)}{
   \fontfigurestyle{foo}
+  \TYPE{\f@family}
+}
+
+\TEST{non-existing (tabular)}{
+  \fontfigurestyle{non-existing}
   \TYPE{\f@family}
 }
 

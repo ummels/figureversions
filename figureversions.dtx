@@ -505,15 +505,21 @@
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_encode_suffix_proportional:N
   {
-    \prop_get:NVNF \g_@@_figurestyles_proportional_prop
-      \l_@@_fontfigurestyle_str \l_tmpa_str
+    \seq_clear:N #1
+    \prop_get:NVN \g_@@_figurestyles_proportional_prop
+      \l_@@_fontfigurestyle_str \l_tmpa_clist
+    \tl_if_eq:NNF \l_tmpa_clist \q_no_value
       {
-        \prop_get:NVN \g_@@_figurestyles_tabular_prop
-          \l_@@_fontfigurestyle_str \l_tmpa_str
+        \clist_map_inline:Nn \l_tmpa_clist
+          { \seq_if_in:NnF #1 {##1} { \seq_put_right:Nn #1 {##1} }  }
       }
-      \tl_if_eq:NNTF \l_tmpa_str \q_no_value
-        { \seq_set_eq:NN #1 \c_empty_seq }
-        { \seq_set_from_clist:NN #1 \l_tmpa_str }
+    \prop_get:NVN \g_@@_figurestyles_tabular_prop
+      \l_@@_fontfigurestyle_str \l_tmpa_clist
+    \tl_if_eq:NNF \l_tmpa_clist \q_no_value
+      {
+        \clist_map_inline:Nn \l_tmpa_clist
+          { \seq_if_in:NnF #1 {##1} { \seq_put_right:Nn #1 {##1} }  }
+      }
 %    \end{macrocode}
 % Since any given font family might have only a restricted number of figure
 % versions (maybe even only tabular ones), we add the well-known suffixes
@@ -535,15 +541,21 @@
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_encode_suffix_tabular:N
   {
-    \prop_get:NVNF \g_@@_figurestyles_tabular_prop
-      \l_@@_fontfigurestyle_str \l_tmpa_str
+    \seq_clear:N #1
+    \prop_get:NVN \g_@@_figurestyles_tabular_prop
+      \l_@@_fontfigurestyle_str \l_tmpa_clist
+    \tl_if_eq:NNF \l_tmpa_clist \q_no_value
       {
-        \prop_get:NVN \g_@@_figurestyles_proportional_prop
-          \l_@@_fontfigurestyle_str \l_tmpa_str
+        \clist_map_inline:Nn \l_tmpa_clist
+          { \seq_if_in:NnF #1 {##1} { \seq_put_right:Nn #1 {##1} }  }
       }
-      \tl_if_eq:NNTF \l_tmpa_str \q_no_value
-        { \seq_set_eq:NN #1 \c_empty_seq }
-        { \seq_set_from_clist:NN #1 \l_tmpa_str }
+    \prop_get:NVN \g_@@_figurestyles_proportional_prop
+      \l_@@_fontfigurestyle_str \l_tmpa_clist
+    \tl_if_eq:NNF \l_tmpa_clist \q_no_value
+      {
+        \clist_map_inline:Nn \l_tmpa_clist
+          { \seq_if_in:NnF #1 {##1} { \seq_put_right:Nn #1 {##1} }  }
+      }
 %    \end{macrocode}
 % Since any given font family might have only a restricted number of figure
 % versions (maybe even only proportional ones), we add the well-known suffixes
@@ -651,14 +663,12 @@
     \bool_set_false:N \l_tmpa_bool
     \prop_map_inline:Nn \g_@@_figurestyles_proportional_prop
       {
-        \seq_set_from_clist:Nn \l_tmpa_seq {##2}
-        \seq_if_in:NVT \l_tmpa_seq \l_tmpa_str
+        \clist_if_in:nVT {##2} \l_tmpa_str
           {
             \str_set:Nn \l_@@_fontfigurestyle_str {##1}
-            \prop_get:NnNT \g_@@_figurestyles_tabular_prop {##1} \l_tmpb_str
+            \prop_get:NnNT \g_@@_figurestyles_tabular_prop {##1} \l_tmpa_clist
               {
-                \seq_set_from_clist:NN \l_tmpa_seq \l_tmpb_str
-                \seq_if_in:NVF \l_tmpa_seq \l_tmpa_str
+                \clist_if_in:NVF \l_tmpa_clist \l_tmpa_str
                   {
                     \str_set_eq:NN \l_@@_fontfigurealignment_str
                       \c_@@_proportional_str
@@ -671,8 +681,7 @@
       {
         \prop_map_inline:Nn \g_@@_figurestyles_tabular_prop
           {
-            \seq_set_from_clist:Nn \l_tmpa_seq {##2}
-            \seq_if_in:NVT \l_tmpa_seq \l_tmpa_str
+            \clist_if_in:nVT {##2} \l_tmpa_str
               {
                 \str_set:Nn \l_@@_fontfigurestyle_str {##1}
                 \str_set_eq:NN \l_@@_fontfigurealignment_str
@@ -996,13 +1005,15 @@
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_new_figurestyle_proportional:nn
   {
-    \prop_gput_if_not_in:Nne \g_@@_figurestyles_proportional_prop {#1}
-      { \tl_to_str:n {#2} }
+    \clist_set:Ne \l_tmpa_clist { \tl_to_str:n {#2} }
+    \prop_gput_if_not_in:NnV \g_@@_figurestyles_proportional_prop {#1}
+      \l_tmpa_clist
   }
 \cs_new_protected:Nn \@@_new_figurestyle_tabular:nn
   {
-    \prop_gput_if_not_in:Nne \g_@@_figurestyles_tabular_prop {#1}
-      { \tl_to_str:n {#2} }
+    \clist_set:Ne \l_tmpa_clist { \tl_to_str:n {#2} }
+    \prop_gput_if_not_in:NnV \g_@@_figurestyles_tabular_prop {#1}
+      \l_tmpa_clist
   }
 \cs_new_protected:Nn \figureversions_new_figurestyle:nnn
   {

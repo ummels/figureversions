@@ -17,11 +17,24 @@ cantarell-OsF
 ============================================================
 TEST 3: foo (proportional)
 ============================================================
-Package figureversions Warning: Ignoring unknown figure style `foo' on line ...
+LaTeX Font Info:    Trying to load font information for T1+cantarell-Foo on input line ....
+No file T1cantarell-Foo.fd.
+LaTeX Font Info:    Trying to load font information for T1+cantarell-foo on input line ....
+No file T1cantarell-foo.fd.
+LaTeX Font Info:    Trying to load font information for T1+cantarell-TFoo on input line ....
+No file T1cantarell-TFoo.fd.
+LaTeX Font Info:    Trying to load font information for T1+cantarell-Tfoo on input line ....
+No file T1cantarell-Tfoo.fd.
+cantarell-LF
+============================================================
+============================================================
+TEST 4: non-existing (proportional)
+============================================================
+Package figureversions Warning: Ignoring unknown figure style `non-existing' on line ...
 cantarell-OsF
 ============================================================
 ============================================================
-TEST 4: lining (tabular)
+TEST 5: lining (tabular)
 ============================================================
 LaTeX Font Info:    Trying to load font information for T1+cantarell-TLF on input line ....
 (../T1cantarell-TLF.fd
@@ -30,7 +43,7 @@ File: T1cantarell-TLF.fd ....-..-.. Font definitions for T1/cantarell-TLF.
 cantarell-TLF
 ============================================================
 ============================================================
-TEST 5: text (tabular)
+TEST 6: text (tabular)
 ============================================================
 LaTeX Font Info:    Trying to load font information for T1+cantarell-TOsF on input line ....
 (../T1cantarell-TOsF.fd
@@ -39,8 +52,13 @@ File: T1cantarell-TOsF.fd ....-..-.. Font definitions for T1/cantarell-TOsF.
 cantarell-TOsF
 ============================================================
 ============================================================
-TEST 6: foo (tabular)
+TEST 7: foo (tabular)
 ============================================================
-Package figureversions Warning: Ignoring unknown figure style `foo' on line ...
+cantarell-TLF
+============================================================
+============================================================
+TEST 8: non-existing (tabular)
+============================================================
+Package figureversions Warning: Ignoring unknown figure style `non-existing' on line ...
 cantarell-TOsF
 ============================================================

@@ -8,11 +8,15 @@
 
 \renewcommand{\rmdefault}{lmr}
 
+\ExplSyntaxOn
+\figureversions_new_figureversion:nn {foo} {}
+\ExplSyntaxOff
+
 \begin{document}
 
 \START
 
-\figureversion{osf,lf,tab,prop,  tabular,proportional   ,  text  ,lining,
-non-existent}
+\figureversion{osf,lf,tab,prop,  tabular,proportional   ,  text  ,lining, foo ,
+non-existing}
 
 \END
