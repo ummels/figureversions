@@ -54,7 +54,7 @@
 %</driver>
 %<*package>
 \NeedsTeXFormat{LaTeX2e}[2024-11-01]
-\ProvidesExplPackage {figureversions} {2025-04-05} {1.0} {Figure versions}
+\ProvidesExplPackage {figureversions} {2025-04-28} {1.0.1} {Figure versions}
 %</package>
 % \fi
 %
@@ -502,6 +502,7 @@
 % |#1|. Since some figure styles may only exist in a tabular version, use that
 % as a fallback. Finally, fall back to |LF|, |OsF|, |TLF| and |TOsF| (in that
 % order).
+% \changes{v1.0.1}{2025-04-28}{Fix bug that could lead to infinite loop}
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_encode_suffix_proportional:N
   {
