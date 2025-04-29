@@ -292,7 +292,7 @@
 %   \cs{figureversions_new_figurestyle:nnn} \marg{name} \marg{proportional suffixes} \marg{tabular suffixes}
 % \end{syntax}
 % Defines a new figure style named \meta{name} with corresponding font family
-% suffixes (given as comma-separated lists, maybe empty) for proportional and
+% suffixes (given as comma-separated lists) for proportional and
 % tabular figure alignment. For instance, the existing figure style `text'
 % is defined by
 % \begin{quote}
@@ -655,8 +655,7 @@
 % suffixes corresponding to the proportional version of a figure style
 % before it iterates through all suffixes corresponding to the tabular
 % versions until the given suffix is found. Does not alter the current
-% figure alignment if a figure style has no tabular version or the suffix
-% is ambiguous.
+% figure alignment the suffix is ambiguous.
 %    \begin{macrocode}
 \cs_new_protected:Nn \@@_decode_suffix:n
   {
@@ -667,13 +666,17 @@
         \clist_if_in:nVT {##2} \l_tmpa_str
           {
             \str_set:Nn \l_@@_fontfigurestyle_str {##1}
-            \prop_get:NnNT \g_@@_figurestyles_tabular_prop {##1} \l_tmpa_clist
+            \prop_get:NnNTF \g_@@_figurestyles_tabular_prop {##1} \l_tmpa_clist
               {
                 \clist_if_in:NVF \l_tmpa_clist \l_tmpa_str
                   {
                     \str_set_eq:NN \l_@@_fontfigurealignment_str
                       \c_@@_proportional_str
                   }
+              }
+              {
+                \str_set_eq:NN \l_@@_fontfigurealignment_str
+                      \c_@@_proportional_str
               }
             \prop_map_break:n { \bool_set_true:N \l_tmpa_bool }
           }
@@ -1007,14 +1010,20 @@
 \cs_new_protected:Nn \@@_new_figurestyle_proportional:nn
   {
     \clist_set:Ne \l_tmpa_clist { \tl_to_str:n {#2} }
-    \prop_gput_if_not_in:NnV \g_@@_figurestyles_proportional_prop {#1}
-      \l_tmpa_clist
+    \clist_if_empty:NF \l_tmpa_clist
+      {
+        \prop_gput_if_not_in:NnV \g_@@_figurestyles_proportional_prop {#1}
+          \l_tmpa_clist
+      }
   }
 \cs_new_protected:Nn \@@_new_figurestyle_tabular:nn
   {
     \clist_set:Ne \l_tmpa_clist { \tl_to_str:n {#2} }
-    \prop_gput_if_not_in:NnV \g_@@_figurestyles_tabular_prop {#1}
-      \l_tmpa_clist
+    \clist_if_empty:NF \l_tmpa_clist
+      {
+        \prop_gput_if_not_in:NnV \g_@@_figurestyles_tabular_prop {#1}
+          \l_tmpa_clist
+      }
   }
 \cs_new_protected:Nn \figureversions_new_figurestyle:nnn
   {
