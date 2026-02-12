@@ -1,5 +1,4 @@
 \input{regression-test}
-\input{test}
 
 \documentclass{article}
 
@@ -10,6 +9,7 @@
 
 \fontfamily{cantarell-OsF}
 \selectfont
+\makeatletter
 
 \START
 

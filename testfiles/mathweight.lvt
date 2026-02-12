@@ -1,5 +1,4 @@
 \input{regression-test}
-\input{test}
 
 \documentclass{article}
 
@@ -9,6 +8,7 @@
 \begin{document}
 
 $1$
+\makeatletter
 
 \START
 
