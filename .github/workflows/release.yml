@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "v*.*"
+    - "v*.*"
 
 permissions:
   contents: write
@@ -14,11 +14,11 @@ jobs:
     container:
       image: registry.gitlab.com/islandoftex/images/texlive:latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Build
-        run: l3build ctan
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: figureversions-ctan.zip
+    - name: Checkout
+      uses: actions/checkout@v6
+    - name: Build
+      run: l3build ctan
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: figureversions-ctan.zip
