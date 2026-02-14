@@ -18,11 +18,13 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    container:
-      image: registry.gitlab.com/islandoftex/images/texlive:latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
+    - name: Install TeX Live
+      uses: zauguin/install-texlive@v4
+      with:
+        package_file: .github/tl_packages
     - name: Run checks
       run: l3build check --show-log-on-error -q -H
     - name: Archive failed test output
@@ -35,13 +37,15 @@ jobs:
   build-docs:
     needs: check
     runs-on: ubuntu-latest
-    container:
-      image: registry.gitlab.com/islandoftex/images/texlive:latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
     - name: Setup Pages
       uses: actions/configure-pages@v5
+    - name: Install TeX Live
+      uses: zauguin/install-texlive@v4
+      with:
+        package_file: .github/tl_packages_full
     - name: Build documentation
       run: l3build doc
     - name: Move documentation
