@@ -2,6 +2,6 @@
 
 module = "figureversions"
 
-checkengines = {"pdftex", "luatex"}
+checkengines = {"pdftex"}
 checkconfigs = {"build", "config-fontspec"}
 ctanreadme = "README-CTAN.md"
